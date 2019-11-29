@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div>
+    @Html.EJS().Grid("Grid").DataSource((IEnumerable<object>)ViewBag.dataSource).Columns(col =>
+{
+    col.Field("OrderID").HeaderText("Order ID").IsPrimaryKey(true).Width("120").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Add();
+    col.Field("CustomerID").HeaderText("Customer Name").Width("150").Add();
+    col.Field("Freight").HeaderText("Freight").Width("120").EditType("numericedit").Template("#customTemplate").Format("C2").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Add();
+    col.Field("ShipName").HeaderText("Ship Name").Width("150").Template("#customTemplate").Add();
+    col.Field("Verified").HeaderText("Checkbox column").EditType("booleanedit").Type("boolean").Template("#template").Width("150").Add();
+    col.Field("ShipCountry").HeaderText("Ship Country").EditType("dropdownedit").Template("#customTemplate").Width("150").Add();
+
+}).AllowPaging().QueryCellInfo("queryCellInfo").EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).Mode(Syncfusion.EJ2.Grids.EditMode.Batch); }).Toolbar(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" }).PageSettings(page => page.PageSize(8)).Render()
+
+</div>
+
+<div id="customTemplate" style="display: none;">
+    <input type="text" id="customEle" />
+</div>
+
+<script id="template" type="text/x-template">
+    <div class="chck">
+        <input type='checkbox'>
+    </div>
+</script>
+
+<script>
+    function queryCellInfo(args) {
+        if (args.column.headerText == "Ship Name") {
+            var ele = args.cell.querySelector('#customEle');
+            var textboxObj = new ej.inputs.TextBox({
+                value: args.data["ShipName"],
+                change: tchange
+            });
+            textboxObj.appendTo(ele);
+        }
+        var type = args.column.editType;
+        if (type == "") {
+            var ele = args.cell.querySelector('#customEle');
+            var textboxObj = new ej.inputs.TextBox({
+                value: args.data["CustomerID"],
+            });
+            textboxObj.appendTo(ele);
+        } else if (type == "datepickeredit") {
+            var ele = args.cell.querySelector('#customEle');
+            var datepickerObject = new ej.calendars.DatePicker({
+                value: args.data["OrderDate"],
+                // sets the format.
+                format: 'MM/dd/yyyy'
+            });
+            datepickerObject.appendTo(ele);
+        } else if (type == "numericedit") {
+            var ele = args.cell.querySelector('#customEle');
+            var currency = new ej.inputs.NumericTextBox({
+                format: 'c2',
+                value: args.data["Freight"],
+                floatLabelType: 'Auto',
+                change: nchange
+            });
+            currency.appendTo(ele);
+        } else if (type == "booleanedit") {
+            var ele = args.cell.querySelector('#customEle');
+            var checkbox = new ej.buttons.CheckBox({
+            });
+            checkbox.appendTo(args.cell.getElementsByTagName('input')[0]);
+            checkbox.checked = args.data["Verified"];
+            checkbox.change = cchnage;
+        } else if (type == "dropdownedit") {
+            var ele = args.cell.querySelector('#customEle');
+            var drop = new ej.dropdowns.DropDownList({
+                value: args.data["ShipCountry"],
+                dataSource: this.getCurrentViewRecords(),
+                fields: { text: 'ShipCountry', value: 'ShipCountry' },
+                change: dchange
+            });
+            drop.appendTo(ele);
+        }
+    }
+
+    function dchange(args) {
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        var selRecId = grid.getSelectedRecords()[0].OrderID;
+        grid.updateCell(grid.getRowIndexByPrimaryKey(selRecId), "ShipCountry", args.value);
+    }
+    function tchange(args) {
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        var selRecId = grid.getSelectedRecords()[0].OrderID;
+        grid.updateCell(grid.getRowIndexByPrimaryKey(selRecId), "ShipName", args.value);
+    }
+    function nchange(args) {
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        var rowInfo = grid.getRowInfo(args.event.target);
+        var id = rowInfo.rowData.OrderID;
+        grid.updateCell(grid.getRowIndexByPrimaryKey(id), "Freight", args.value);
+    }
+    function cchnage(args) {
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        var rowInfo = grid.getRowInfo(args.event.target);
+        var id = rowInfo.rowData.OrderID;
+        grid.updateCell(grid.getRowIndexByPrimaryKey(id), "Verified", args.checked);
+    }
+</script>
