@@ -1,5 +1,8 @@
 [allowlist]
 description = "Gitleaks allowlist for known false positives"
 paths = [
-  '''.*Web\.config$'''
+  '''.*Web\.config$''',
+  '''.*\.csproj$''',
+  '''.*applicationhost\.config$''',
+  '''.*\.vs\..*'''
 ]
