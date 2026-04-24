@@ -1,14 +1,32 @@
-# ASP.NET MVC DataGrid - EditAllRows using BatchEdit
+# ASP.NET MVC DataGrid - Edit All Rows using Batch Edit
 
-This sample explains about how to edit all rows using batch editing in ASP.NET MVC DataGrid.
+This sample demonstrates editing all rows simultaneously using the batch edit mode in the Syncfusion EJ2 ASP.NET MVC DataGrid.
+
+## Project Overview
+
+This ASP.NET MVC application showcases how the Syncfusion EJ2 DataGrid's batch editing feature can be used to enable inline editing across all rows at once. Users can modify multiple cells, then commit or cancel all changes in a single operation — ideal for bulk data entry scenarios.
+
+## Features
+
+- Enable batch (bulk) editing on all rows in the Syncfusion EJ2 ASP.NET MVC DataGrid
+- Commit or discard all row changes at once
 
 ## Prerequisites
 
-* Visual Studio 2022
+- [Visual Studio](https://visualstudio.microsoft.com/)
+- Syncfusion.EJ2.MVC5 NuGet package
 
-## How to run the project
+## Installation
 
-* Checkout this project to a location in your disk.
-* Open the solution file using the Visual Studio 2022.
-* Restore the NuGet packages by rebuilding the solution.
-* Run the project.
+1. Clone or download this repository to your local machine.
+2. Open `EJ2MVCEditAllRows\EJ2MVC.sln` in Visual Studio.
+3. Restore NuGet packages by rebuilding the solution (**Build > Rebuild Solution**).
+
+## Running the Application
+
+Press **F5** or click **Start** in Visual Studio to build and launch the application in IIS Express.
+
+## Documentation and Resources
+
+- **Documentation**: https://ej2.syncfusion.com/aspnetmvc/documentation/grid/editing/batch-editing
+- **Live Demo**: https://ej2.syncfusion.com/aspnetmvc/Grid/BatchEditing
