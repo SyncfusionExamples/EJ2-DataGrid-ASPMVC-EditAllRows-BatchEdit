@@ -1,0 +1,10 @@
+[allowlist]
+description = "Gitleaks allowlist"
+paths = [
+  '''.*Web\.config$'''
+]
+[allowlist]
+description = "False positive: EntityFramework Microsoft public key token (not a secret)"
+regexes = [
+  '''PublicKeyToken=b77a5c561934e089'''
+]
